@@ -1,0 +1,15 @@
+# Base frameworks
+flask
+webargs
+pillow
+
+# Deployment
+gunicorn
+
+# Security
+Flask-CORS==1.10.3
+
+redis
+
+# Monitoring
+opbeat[flask]==3.2.1

@@ -1,0 +1,16 @@
+# Everything the developer needs in addition to the production requirements
+-r prod.txt
+
+# Testing
+pytest
+pytest-cov
+mock
+coverage
+factory-boy==2.4.0
+honcho
+
+# Style checkers/linters
+flake8
+pep257
+pylint
+pep8radius
