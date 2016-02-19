@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os
 import logging
@@ -43,6 +44,9 @@ class Config(object):
     CORS_ALWAYS_SEND = True
 
     PROFILE = bool(os.environ.get('PROFILE', False))
+
+    MAX_IMAGE_WIDTH = int(os.getenv('MAX_IMAGE_WIDTH', 3840))
+    MAX_IMAGE_HEIGHT = int(os.getenv('MAX_IMAGE_HEIGHT', 2400))
 
 
 class TestConfig(Config):

@@ -1,0 +1,23 @@
+sudo: false
+
+language: python
+python:
+  - pypy
+
+cache:
+  pip: true
+  directories:
+    - env
+
+install:
+  - pip install coveralls
+
+before_script:
+  - make env
+  - make depends
+
+script:
+  - make ci
+
+after_success:
+  - coveralls

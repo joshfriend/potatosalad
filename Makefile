@@ -14,15 +14,18 @@ BIN := $(ENV)/bin
 OPEN := open
 
 # virtualenv executables
-PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
-PEP8 := $(BIN)/pep8
-FLAKE8 := $(BIN)/flake8
-PEP257 := $(BIN)/pep257
-PYTEST := $(BIN)/py.test
-COVERAGE := $(BIN)/coverage
-ACTIVATE := $(BIN)/activate
-HONCHO := . $(ACTIVATE); $(BIN)/honcho
+ifndef TRAVIS
+	BIN_ := $(BIN)/
+endif
+PYTHON := $(BIN_)python
+PIP := $(BIN_)pip
+PEP8 := $(BIN_)pep8
+FLAKE8 := $(BIN_)flake8
+PEP257 := $(BIN_)pep257
+PYTEST := $(BIN_)py.test
+COVERAGE := $(BIN_)coverage
+ACTIVATE := $(BIN_)activate
+HONCHO := . $(ACTIVATE); $(BIN_)honcho
 
 # Flags for PHONY targets
 DEPENDS_DEV := $(ENV)/.depends-dev
@@ -34,7 +37,7 @@ ALL := $(ENV)/.all
 all: test check
 
 .PHONY: ci
-ci: pep8 pep257 test tests
+ci: flake8 test
 
 # Development Installation ###################################################
 
@@ -53,17 +56,13 @@ depends: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): $(REQUIREMENTS_DEV) $(REQUIREMENTS_PROD)
 	. $(ACTIVATE); \
-	$(PIP) install --use-wheel --upgrade -r $(REQUIREMENTS_DEV)
+	$(PIP) install --upgrade -r $(REQUIREMENTS_DEV)
 	touch $(DEPENDS_DEV) # flag to indicate dependencies are installed
 
 # Static Analysis ############################################################
 
 .PHONY: check
 check: flake8 apiary-check
-
-.PHONY: pep8
-pep8: depends
-	$(PEP8) $(PACKAGE)
 
 .PHONY: flake8
 flake8: depends
@@ -77,20 +76,11 @@ pep257: depends
 
 PYTEST_OPTS := --cov $(PACKAGE)  \
 			   --cov-report html \
-			   --cov-report xml  \
-			   --cov-report term-missing \
-			   --junitxml=pyunit.xml
+			   --cov-report term-missing
 
 .PHONY: test
 test: depends
 	$(PYTEST) $(PYTEST_OPTS) tests
-	@if [ "$(bamboo_planKey)" ]; then             \
-		$(CLOVER_CONV) coverage.xml > clover.xml; \
-	fi
-
-.PHONY: tests
-tests: depends
-	TEST_INTEGRATION=1 $(MAKE) test
 
 .PHONY: htmlcov
 htmlcov:

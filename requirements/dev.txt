@@ -4,13 +4,11 @@
 # Testing
 pytest
 pytest-cov
+pytest-flask
 mock
 coverage
-factory-boy==2.4.0
 honcho
 
 # Style checkers/linters
 flake8
 pep257
-pylint
-pep8radius

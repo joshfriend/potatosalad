@@ -16,7 +16,7 @@ from potatosalad.api import api, log as _api_log
 
 
 FLASK_ENV = os.environ.get("FLASK_ENV")
-if FLASK_ENV == 'production':
+if FLASK_ENV == 'production':  # pragma: no cover
     DefaultConfig = ProdConfig
 else:
     DefaultConfig = DevConfig
@@ -30,7 +30,7 @@ def create_app(config_object=DefaultConfig):
     '''
     app = Flask(__name__)
     app.config.from_object(config_object)
-    if not app.debug:
+    if not app.debug:  # pragma: no cover
         opbeat.init_app(app)
     configure_logging(app)
     register_extensions(app)

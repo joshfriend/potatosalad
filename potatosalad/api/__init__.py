@@ -5,7 +5,7 @@ from time import time
 
 from flask import Blueprint, g, request, current_app
 
-from .util import log
+from potatosalad.util import log
 
 
 api = Blueprint("api", __name__)
@@ -22,7 +22,7 @@ def if_debug(func):
 
 @api.before_request
 def record_request_start_time():
-    if current_app.debug:
+    if current_app.debug:  # pragma: no branch
         g._request_start_time = time()
 
 
@@ -32,8 +32,6 @@ def log_request(response):
     """Log any requests/responses with an error code"""
     duration = (time() - g._request_start_time) * 1000
     path = request.path.encode('utf-8')
-    if request.args:
-        path += '?%s' % unquote(urlencode(encoded_dict(request.args)))
     log.debug('%7s: %s - %i (%.1lfms)', request.method, path,
               response.status_code, duration)
     return response

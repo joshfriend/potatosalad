@@ -6,10 +6,12 @@ import random
 import mimetypes
 from cStringIO import StringIO
 
-from flask import jsonify, send_file
+from flask import send_file, current_app
+from werkzeug.exceptions import BadRequest
 from PIL import Image
 
-from potatosalad.api import api, log
+from potatosalad.api import api
+from potatosalad.util import log, cache_control, crop_resize
 
 
 def _is_image(path):
@@ -17,37 +19,48 @@ def _is_image(path):
     return 'image' in str(mime)
 
 
+# Load images in memory instead of constantly reading them from disk
 IMAGE_DIR = os.path.abspath(os.path.dirname(__file__) + '../../../images')
-IMAGES = filter(_is_image, os.listdir(IMAGE_DIR))
+IMAGE_FILES = filter(_is_image, os.listdir(IMAGE_DIR))
+images = []
+for path in IMAGE_FILES:
+    path = os.path.join(IMAGE_DIR, path)
+    images.append(Image.open(path))
 
 
-def serve_pil_image(img):
+ALLOWED_IMAGE_FORMATS = {
+    'jpg': 'jpeg',  # Valid extension but not recognized by PIL
+    'jpeg': 'jpeg',
+    'bmp': 'bmp',
+    'png': 'png',
+}
+
+
+def serve_pil_image(img, fmt):
+    fmt = ALLOWED_IMAGE_FORMATS[fmt]
+    mimetype = 'image/' + fmt
+    log.info(mimetype)
     f = StringIO()
-    img.save(f, 'JPEG', quality=70)
+    img.save(f, fmt, quality=70)
     f.seek(0)
-    return send_file(f, mimetype='image/jpeg')
+    return send_file(f, mimetype=mimetype)
 
 
-def center_crop(img, target):
-    ch, cw = map(float, img.size)
-    current_ratio = cw / ch
-    tw, th = map(float, target)
-    target_ratio = tw / th
-    log.debug("Crop aspect %.3f -> %.3f", current_ratio, target_ratio)
-    return img
+@api.route('/<int:w>/<int:h>.<ext>')
+@api.route('/<int:w>/<int:h>')
+@cache_control('max-age=60')
+def placeholder_image(w, h, ext='jpeg'):
+    # Check max dimensions
+    maxh = current_app.config['MAX_IMAGE_HEIGHT']
+    maxw = current_app.config['MAX_IMAGE_WIDTH']
+    if h > maxh or w > maxw:
+        raise BadRequest('Image must be smaller than %ix%i' % (maxw, maxh))
 
+    if ext not in ALLOWED_IMAGE_FORMATS:
+        raise BadRequest(
+            'Allowed formats are: %s' % ', '.join(ALLOWED_IMAGE_FORMATS)
+        )
 
-def resize(img, target):
-    ch, cw = img.size
-    tw, th = target
-    log.debug('Resize %ix%i -> %ix%i', ch, cw, th, tw)
-    return img
-
-
-@api.route('/<int:h>/<int:w>')
-def placeholder_image(h, w):
-    path = os.path.join(IMAGE_DIR, random.choice(IMAGES))
-    img = Image.open(path)
-    img = center_crop(img, (h, w))
-    img = resize(img, (h, w))
-    return serve_pil_image(img)
+    img = random.choice(images)
+    img = crop_resize(img, (h, w))
+    return serve_pil_image(img, ext)
