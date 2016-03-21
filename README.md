@@ -1,5 +1,8 @@
 # John Cena Placeholder Image Generator
 
+[![Build Status](http://img.shields.io/travis/joshfriend/potatosalad/master.svg)](https://travis-ci.org/joshfriend/potatosalad)
+[![Coverage Status](http://img.shields.io/coveralls/joshfriend/potatosalad/master.svg)](https://coveralls.io/r/joshfriend/potatosalad)
+
 ## Requirements:
 
 * [PyPy 4.0.0](http://pypy.org/download.html)
@@ -11,7 +14,6 @@ The following python checkers are available:
 * `pep8`: [PEP8](http://legacy.python.org/dev/peps/pep-0008/) style checker
 * `pep257` [PEP257](http://legacy.python.org/dev/peps/pep-0257/) docstring checker
 * `flake8`: Combines PEP8 with [PyFlakes](https://pypi.python.org/pypi/pyflakes), a static analysis tool
-* `pylint`: Python code analyzer
 
 To run all checkers required to pass a build:
 

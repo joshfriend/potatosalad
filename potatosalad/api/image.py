@@ -11,7 +11,7 @@ from werkzeug.exceptions import BadRequest
 from PIL import Image
 
 from potatosalad.api import api
-from potatosalad.util import log, cache_control, crop_resize
+from potatosalad.util import cache_control, crop_resize
 
 
 def _is_image(path):
@@ -39,7 +39,6 @@ ALLOWED_IMAGE_FORMATS = {
 def serve_pil_image(img, fmt):
     fmt = ALLOWED_IMAGE_FORMATS[fmt]
     mimetype = 'image/' + fmt
-    log.info(mimetype)
     f = StringIO()
     img.save(f, fmt, quality=70)
     f.seek(0)
