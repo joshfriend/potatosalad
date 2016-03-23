@@ -1,14 +1,11 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
 # Only scan changed/added files
 staged=$(git diff --staged --name-status | grep '[MA]' | awk '{ print $2 }')
 
 ignorepattern="(.*\.json)"
 
-text_files=()
+no_newline=()
 for file in $staged; do
     # Check if file is text
     ftype=$(file $file)
@@ -20,13 +17,15 @@ for file in $staged; do
         continue
     fi
 
-    text_files+=($file)
+    # http://backreference.org/2010/05/23/sanitizing-files-with-no-trailing-newline/
+    tail -c1 $file | read -r _
+    if [ $? -ne 0 ]; then
+        no_newline+=($file)
+    fi
 done
 
-have_trailing_space=$(egrep -l " +$" $text_files)
-
-if [ "$have_trailing_space" ]; then
-    printf "${RED}The following staged files have trailing whitespace:${NC}\n"
-    echo $have_trailing_space
+if [ "$no_newline" ]; then
+    log_error "The following staged files have no trailing newline:"
+    echo $no_newline
     exit 1
 fi
