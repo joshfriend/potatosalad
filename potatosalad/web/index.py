@@ -4,7 +4,7 @@
 import re
 import os.path
 
-from flask import render_template
+from flask import render_template, current_app as app
 
 from potatosalad._info import ROOT, HOSTNAME
 from potatosalad.web import site
@@ -20,4 +20,8 @@ README = re.sub(r'\(https?:\/\/%s\/(.*)\)' % HOSTNAME, '(\\g<1>)', README)
 @site.route("/")
 @cache_control('max-age=86400')
 def index():
-    return render_template('index.html.j2', body=README)
+    return render_template(
+        'index.html.j2',
+        body=README,
+        tid=app.config['ANALYTICS_TID']
+    )

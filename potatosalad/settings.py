@@ -36,6 +36,8 @@ class Config(object):
     MAX_IMAGE_WIDTH = int(os.getenv('MAX_IMAGE_WIDTH', 3840))
     MAX_IMAGE_HEIGHT = int(os.getenv('MAX_IMAGE_HEIGHT', 2400))
 
+    ANALYTICS_TID = os.getenv('ANALYTICS_TID', 'test')
+
 
 class TestConfig(Config):
     # Basic app settings
