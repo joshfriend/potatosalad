@@ -11,16 +11,8 @@ class Config(object):
     DEBUG = True
     TESTING = False
 
-    # JSON config
-    JSON_INDENT = 4
-    JSON_SORT_KEYS = True
-
-    # Security
-    USE_SSL = False
-
     # Logging
     LOG_FORMAT = '%(name)-16s | %(levelname)-8s | %(message)s'
-    SQLALCHEMY_LOG_LEVEL = logging.WARNING
     DEFAULT_LOG_LEVEL = logging.DEBUG
     ERROR_404_HELP = False
 
@@ -32,11 +24,8 @@ class Config(object):
     }
 
     # CORS Settings
-    REDIS_URL = 'redis://localhost/potatosalad'
-    RATELIMIT_STORAGE_URL = REDIS_URL
     CORS_ALLOW_HEADERS = (
         'Content-Type',
-        'Authorization',
         'Origin',
     )
     CORS_ORIGINS = ('*',)
@@ -52,11 +41,6 @@ class TestConfig(Config):
     # Basic app settings
     ENV = 'test'
     TESTING = True
-
-    # Security
-    SECRET_KEY = 'test'
-
-    SQLALCHEMY_LOG_LEVEL = logging.WARNING
 
 
 class DevConfig(Config):
@@ -76,10 +60,10 @@ class ProdConfig(Config):
     DEBUG = False
 
     # CORS settings
-    CORS_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+    CORS_ORIGINS = os.getenv(
+        'CORS_ALLOWED_ORIGINS',
+        ','.join(Config.CORS_ORIGINS)
+    ).split(',')
 
     # Logging configuration
     DEFAULT_LOG_LEVEL = logging.INFO
-
-    # Celery backend configuration
-    REDIS_URL = os.getenv('REDIS_URL', Config.REDIS_URL)

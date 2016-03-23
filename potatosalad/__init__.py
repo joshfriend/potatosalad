@@ -38,7 +38,6 @@ def create_app(config_object=DefaultConfig):
     configure_logging(app)
     register_extensions(app)
     register_blueprints(app)
-    install_middleware(app)
     log.info('Serving up some delicious potato salad...')
     return app
 
@@ -69,18 +68,6 @@ def configure_logging(app):
     _cors_log = logging.getLogger('Flask-Cors')
     _cors_log.setLevel(logging.WARNING)
 
-    _args_log = logging.getLogger('webargs.flaskparser')
-    _args_log.setLevel(logging.WARNING)
-
     # Api does its own request logging
     _werkzeug_log = logging.getLogger('werkzeug')
     _werkzeug_log.setLevel(logging.ERROR)
-
-    _sqla_log = logging.getLogger('sqlalchemy.engine')
-    _sqla_log.setLevel(app.config['SQLALCHEMY_LOG_LEVEL'])
-
-
-def install_middleware(app):  # pragma: no cover, manual test
-    if bool(app.config.get('PROFILE', False)):
-        from werkzeug.contrib.profiler import ProfilerMiddleware
-        app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[10])

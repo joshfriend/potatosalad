@@ -3,13 +3,11 @@
 
 import re
 import os.path
-import logging
 
 from flask import render_template
 
 from potatosalad._info import ROOT, HOSTNAME
 from potatosalad.web import site
-from potatosalad.util import log
 from potatosalad.util import cache_control
 
 README_FILE = os.path.join(ROOT, 'README.md')

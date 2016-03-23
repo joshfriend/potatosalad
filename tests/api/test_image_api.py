@@ -43,8 +43,7 @@ class TestImageApi(object):
     def default_format_is_jpg(self, client):
         r = client.get(image_url(1, 1))
         assert r.status_code == 200
-
-        assert r.headers['Content-Type'] == 'image/jpeg'
+        assert r.mimetype == 'image/jpeg'
 
     def test_get_iamge(self, client):
         dimensions = (100, 200)
@@ -52,7 +51,6 @@ class TestImageApi(object):
         assert r.status_code == 200
 
         f = StringIO(r.get_data())
-
         img = Image.open(f)
 
         assert img.size == dimensions
