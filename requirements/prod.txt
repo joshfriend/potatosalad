@@ -5,6 +5,7 @@ pillow
 
 # Deployment
 gunicorn
+Flask-Misaka
 
 # Security
 Flask-CORS==1.10.3

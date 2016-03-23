@@ -10,6 +10,7 @@ from flask import send_file, current_app
 from werkzeug.exceptions import BadRequest
 from PIL import Image
 
+from potatosalad._info import IMAGE_DIR
 from potatosalad.api import api
 from potatosalad.util import cache_control, crop_resize
 
@@ -20,7 +21,6 @@ def _is_image(path):
 
 
 # Load images in memory instead of constantly reading them from disk
-IMAGE_DIR = os.path.abspath(os.path.dirname(__file__) + '../../../images')
 IMAGE_FILES = filter(_is_image, os.listdir(IMAGE_DIR))
 images = []
 for path in IMAGE_FILES:

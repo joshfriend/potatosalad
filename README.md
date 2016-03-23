@@ -12,7 +12,7 @@ and height (and optionally, a format) in the URL:
 
 For example:
 
-`https://potatosalad.herokuapp.com/320/240.jpg`
+[`https://potatosalad.herokuapp.com/320/240.jpg`](https://potatosalad.herokuapp.com/320/240.jpg)
 
 Would give you a picture like this:
 

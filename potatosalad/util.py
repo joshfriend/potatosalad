@@ -7,7 +7,7 @@ import functools
 from flask import make_response
 from PIL import Image
 
-log = logging.getLogger('api')
+log = logging.getLogger(__name__)
 
 
 def cache_control(*directives):
@@ -37,8 +37,6 @@ def crop_resize(img, size):
     current_ar = ch / float(cw)
     target_ar = th / float(tw)
 
-    log.debug("Crop aspect %.3f -> %.3f", target_ar, current_ar)
-
     bounds = None
     if current_ar > target_ar:
         # Crop horizontally
@@ -50,7 +48,6 @@ def crop_resize(img, size):
         bounds = (0, yoffset, ch, cw - yoffset)
 
     if bounds:
-        log.debug('Crop bounds: %s', bounds)
         img = img.crop(bounds)
 
     log.debug('Resize %ix%i -> %ix%i', ch, cw, th, tw)

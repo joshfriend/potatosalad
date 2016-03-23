@@ -19,8 +19,7 @@ class Config(object):
     USE_SSL = False
 
     # Logging
-    LOG_FORMAT = '%(asctime)s | %(name)-12s | %(levelname)-8s | %(message)s'
-    LOG_DATE_FORMAT = '%m/%d/%Y %H:%M:%S'
+    LOG_FORMAT = '%(name)-16s | %(levelname)-8s | %(message)s'
     SQLALCHEMY_LOG_LEVEL = logging.WARNING
     DEFAULT_LOG_LEVEL = logging.DEBUG
     ERROR_404_HELP = False

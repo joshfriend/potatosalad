@@ -11,8 +11,10 @@ from potatosalad.settings import DevConfig, ProdConfig
 from potatosalad.extensions import (
     cors,
     opbeat,
+    md,
 )
-from potatosalad.api import api, log as _api_log
+from potatosalad.api import api
+from potatosalad.web import site
 
 
 FLASK_ENV = os.environ.get("FLASK_ENV")
@@ -20,6 +22,8 @@ if FLASK_ENV == 'production':  # pragma: no cover
     DefaultConfig = ProdConfig
 else:
     DefaultConfig = DevConfig
+
+log = logging.getLogger(__name__)
 
 
 def create_app(config_object=DefaultConfig):
@@ -36,16 +40,18 @@ def create_app(config_object=DefaultConfig):
     register_extensions(app)
     register_blueprints(app)
     install_middleware(app)
-    _api_log.info("Serving up some delicious potato salad...")
+    log.info('Serving up some delicious potato salad...')
     return app
 
 
 def register_extensions(app):
     cors.init_app(app)
+    md.init_app(app)
 
 
 def register_blueprints(app):
     app.register_blueprint(api)
+    app.register_blueprint(site)
 
 
 def configure_logging(app):
@@ -57,10 +63,9 @@ def configure_logging(app):
     }
     default_level = app.config['DEFAULT_LOG_LEVEL']
     level = log_levels.get(os.getenv('LOG_LEVEL'), default_level)
-    logging.basicConfig(format=app.config['LOG_FORMAT'],
-                        datefmt=app.config['LOG_DATE_FORMAT'])
+    logging.basicConfig(format=app.config['LOG_FORMAT'])
 
-    _api_log.setLevel(level)
+    log.setLevel(level)
 
     _cors_log = logging.getLogger('Flask-Cors')
     _cors_log.setLevel(logging.WARNING)
