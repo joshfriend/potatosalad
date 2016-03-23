@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''The app module, containing the app factory function.'''
+"""The app module, containing the app factory function."""
 
 import os
 import logging
@@ -16,8 +16,7 @@ from potatosalad.extensions import (
 from potatosalad.api import api
 from potatosalad.web import site
 
-
-FLASK_ENV = os.environ.get("FLASK_ENV")
+FLASK_ENV = os.environ.get('FLASK_ENV')
 if FLASK_ENV == 'production':  # pragma: no cover
     DefaultConfig = ProdConfig
 else:
@@ -27,11 +26,11 @@ log = logging.getLogger(__name__)
 
 
 def create_app(config_object=DefaultConfig):
-    '''An application factory, as explained here:
+    """An application factory, as explained here:
         http://flask.pocoo.org/docs/patterns/appfactories/
 
     :param config_object: The configuration object to use.
-    '''
+    """
     app = Flask(__name__)
     app.config.from_object(config_object)
     if not app.debug:  # pragma: no cover
