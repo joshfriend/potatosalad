@@ -1,0 +1,21 @@
+{
+  "name": "potatosalad",
+  "description": "John Cena Placeholder Image Generator",
+  "scripts": {},
+  "env": {
+    "FLASK_ENV": {
+      "required": true
+    },
+    "ANALYTICS_TID": {
+      "required": true
+    }
+  },
+  "addons": [
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python.git"
+    }
+  ]
+}
