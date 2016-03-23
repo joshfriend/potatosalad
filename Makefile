@@ -62,7 +62,7 @@ $(DEPENDS_DEV): $(REQUIREMENTS_DEV) $(REQUIREMENTS_PROD)
 # Static Analysis ############################################################
 
 .PHONY: check
-check: flake8 apiary-check
+check: flake8
 
 .PHONY: flake8
 flake8: depends
