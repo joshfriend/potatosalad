@@ -61,5 +61,5 @@ def placeholder_image(w, h, ext='jpeg'):
         )
 
     img = random.choice(images)
-    img = crop_resize(img, (h, w))
+    img = crop_resize(img, (w, h))
     return serve_pil_image(img, ext)

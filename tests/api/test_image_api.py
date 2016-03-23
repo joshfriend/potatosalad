@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from cStringIO import StringIO
+
 import pytest
+from PIL import Image
 
 
 def image_url(w, h, ext=None):
@@ -42,3 +45,14 @@ class TestImageApi(object):
         assert r.status_code == 200
 
         assert r.headers['Content-Type'] == 'image/jpeg'
+
+    def test_get_iamge(self, client):
+        dimensions = (100, 200)
+        r = client.get(image_url(*dimensions))
+        assert r.status_code == 200
+
+        f = StringIO(r.get_data())
+
+        img = Image.open(f)
+
+        assert img.size == dimensions
