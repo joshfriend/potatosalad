@@ -5,7 +5,7 @@
 
 ## Requirements:
 
-* [PyPy 4.0.0](http://pypy.org/download.html)
+* [PyPy 5.0.1](http://pypy.org/download.html)
 * [Virtualenv](http://virtualenv.readthedocs.org/en/latest/virtualenv.html#installation)
 
 ## Running Style Checkers
