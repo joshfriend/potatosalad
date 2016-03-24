@@ -1,14 +1,16 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import logging
 
 from functools import wraps
 from time import time
 
 from flask import Blueprint, g, request, current_app
 
-from potatosalad.util import log
+log = logging.getLogger(__name__)
 
-
-api = Blueprint("api", __name__)
+api = Blueprint('api', __name__)
 
 
 def if_debug(func):

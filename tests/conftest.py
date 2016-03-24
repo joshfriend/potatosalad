@@ -23,9 +23,12 @@ class LoggingTestClient(FlaskClient):
 
         # Debug printing
         r = super(self.__class__, self).open(path, **kwargs)
-        self.log.debug('response status: %i', r.status_code)
-        self.log.debug('response headers: \n%s', r.headers)
-        self.log.debug('response data: \n%s', r.get_data())
+        self.log.debug('Response status: %i', r.status_code)
+        self.log.debug('Response headers: \n%s', r.headers)
+        if 'image' in r.mimetype:
+            self.log.debug('Response data: <Binary Image Data>')
+        else:
+            self.log.debug('Response data: \n%s', r.get_data())
 
         return r
 
