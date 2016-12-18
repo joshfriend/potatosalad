@@ -5,7 +5,7 @@
 
 ## Instructions
 Potatosalad works like most other placeholder image generator sites, like
-[Place Harold][placeharold] or [Placekitten][placekitten]. Put the image width
+[Lorem Pixel][lorempixel] or [Placekitten][placekitten]. Put the image width
 and height (and optionally, a format) in the URL:
 
 `https://potatosalad.herokuapp.com/<width>/<height>.<format>`
@@ -31,5 +31,5 @@ supported:
 [travis-status]: https://travis-ci.org/joshfriend/potatosalad
 [coveralls-status]: https://coveralls.io/r/joshfriend/potatosalad
 [coveralls-badge]: http://img.shields.io/coveralls/joshfriend/potatosalad/master.svg
-[placeharold]: http://placeharold.com/
+[lorempixel]: http://lorempixel.com/
 [placekitten]: https://placekitten.com/
