@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "preLaunchTask": "make depends",
+            "pythonPath": "${workspaceRoot}/env/bin/python",
+            "program": "${workspaceRoot}/manage.py",
+            "args": [
+                "runserver",
+                "--no-reload"
+            ],
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput",
+                "DebugStdLib"
+            ]
+        }
+    ]
+}

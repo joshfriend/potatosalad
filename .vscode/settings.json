@@ -1,0 +1,41 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "env/": true,
+        ".idea/": true,
+        ".vagrant/": true,
+        "celerybeat*": true,
+        "**/*.pyc": true,
+        ".ropeproject/": true,
+        "apiary.html": true,
+        "pyunit.xml": true,
+        "**/.cache": true,
+        "**/__pycache__": true,
+        "*.dump": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.apib": "markdown"
+    },
+
+    "editor.rulers": [80],
+    "editor.tabSize": 4,
+
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/htmlcov": true
+    },
+
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pydocstyleEnabled": false,
+    "python.linting.lintOnTextChange": false,
+    "python.linting.lintOnSave": true,
+    "python.linting.flake8Path": "${workspaceRoot}/env/bin/flake8",
+    "python.pythonPath": "${workspaceRoot}/env/bin/python"
+}
