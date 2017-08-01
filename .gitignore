@@ -44,6 +44,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+pyunit.xml
 
 # Translations
 *.mo
@@ -60,3 +61,5 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+celerybeat-schedule
