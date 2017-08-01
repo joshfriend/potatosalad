@@ -13,7 +13,7 @@ from potatosalad.extensions import (
     opbeat,
     md,
 )
-from potatosalad.api import api
+from potatosalad.api import endpoints
 from potatosalad.web import site
 
 FLASK_ENV = os.environ.get('FLASK_ENV')
@@ -48,7 +48,7 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    app.register_blueprint(api)
+    app.register_blueprint(endpoints)
     app.register_blueprint(site)
 
 

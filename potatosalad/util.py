@@ -1,13 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import random
 import logging
 import functools
+import mimetypes
 
 from flask import make_response
 from PIL import Image
 
+from potatosalad._info import IMAGE_DIR
+
 log = logging.getLogger(__name__)
+
+
+def _is_image(path):
+    mime, _ = mimetypes.guess_type(path)
+    return 'image' in str(mime)
+
+
+# Load images in memory instead of constantly reading them from disk
+_IMAGE_FILES = filter(_is_image, os.listdir(IMAGE_DIR))
+_images = []
+for path in _IMAGE_FILES:
+    path = os.path.join(IMAGE_DIR, path)
+    _images.append(Image.open(path))
+
+
+def pick_random_image():
+    index = random.randint(0, len(_images) - 1)
+    log.debug('Random image: %s', _IMAGE_FILES[index])
+    return _images[index]
+
+
+def remove_transparency(image):
+    bg = Image.new(image.mode[:-1], image.size, '#ffffff')
+    bg.paste(image, image.split()[-1])
+    return bg
 
 
 def cache_control(*directives):

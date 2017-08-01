@@ -10,7 +10,7 @@ from flask import Blueprint, g, request, current_app
 
 log = logging.getLogger(__name__)
 
-api = Blueprint('api', __name__)
+endpoints = Blueprint('endpoints', __name__)
 
 
 def if_debug(func):
@@ -22,13 +22,13 @@ def if_debug(func):
     return wrapper
 
 
-@api.before_request
+@endpoints.before_request
 def record_request_start_time():
     if current_app.debug:  # pragma: no branch
         g._request_start_time = time()
 
 
-@api.after_request
+@endpoints.after_request
 @if_debug
 def log_request(response):
     """Log any requests/responses with an error code"""
