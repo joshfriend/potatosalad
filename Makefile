@@ -5,7 +5,7 @@ SOURCES := Makefile $(shell find $(PACKAGE) -name '*.py')
 REQUIREMENTS_DEV := requirements/dev.txt
 REQUIREMENTS_PROD := requirements/prod.txt
 
-SYS_PYTHON := pypy
+SYS_PYTHON := python
 SYS_VIRTUALENV := virtualenv
 
 # virtualenv paths (automatically detected from the system Python)
