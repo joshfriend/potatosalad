@@ -14,7 +14,10 @@
         "pyunit.xml": true,
         "**/.cache": true,
         "**/__pycache__": true,
-        "*.dump": true
+        "*.dump": true,
+        ".coverage": true,
+        "htmlcov/": true,
+        ".venv/": true
     },
     "files.trimTrailingWhitespace": true,
     "files.associations": {
@@ -24,17 +27,12 @@
     "editor.rulers": [80],
     "editor.tabSize": 4,
 
-    "search.exclude": {
-        "**/node_modules": true,
-        "**/bower_components": true,
-        "**/htmlcov": true
-    },
+    "search.useIgnoreFiles": true,
 
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.pydocstyleEnabled": false,
-    "python.linting.lintOnTextChange": false,
     "python.linting.lintOnSave": true,
     "python.linting.flake8Path": "${workspaceRoot}/env/bin/flake8",
     "python.pythonPath": "${workspaceRoot}/env/bin/python"

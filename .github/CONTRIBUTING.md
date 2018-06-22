@@ -51,6 +51,6 @@ Basic requirements for pull requests are as follows:
 [placekitten]: https://placekitten.com/
 [pypy]: http://pypy.org/download.html
 [virtualenv]: http://virtualenv.readthedocs.org/en/latest/virtualenv.html#installation
-[pyflakes]: https://pypi.python.org/pypi/pyflakes
+[pyflakes]: https://pypi.org/project/pyflakes
 [pep8]: http://legacy.python.org/dev/peps/pep-0008/
 [pep257]: http://legacy.python.org/dev/peps/pep-0257/
