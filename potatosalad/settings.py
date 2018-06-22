@@ -16,13 +16,6 @@ class Config(object):
     DEFAULT_LOG_LEVEL = logging.DEBUG
     ERROR_404_HELP = False
 
-    OPBEAT = {
-        'ORGANIZATION_ID': os.getenv('OPBEAT_ORG_ID'),
-        'APP_ID': os.getenv('OPBEAT_APP_ID'),
-        'SECRET_TOKEN': os.getenv('OPBEAT_SECRET_TOKEN'),
-        'INCLUDE_PATHS': ['potatosalad']
-    }
-
     # CORS Settings
     CORS_ALLOW_HEADERS = (
         'Content-Type',

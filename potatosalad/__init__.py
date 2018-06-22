@@ -10,7 +10,6 @@ from flask import Flask
 from potatosalad.settings import DevConfig, ProdConfig
 from potatosalad.extensions import (
     cors,
-    opbeat,
     md,
 )
 from potatosalad.api import endpoints
@@ -33,8 +32,6 @@ def create_app(config_object=DefaultConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_object)
-    if not app.debug:  # pragma: no cover
-        opbeat.init_app(app)
     configure_logging(app)
     register_extensions(app)
     register_blueprints(app)
